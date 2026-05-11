@@ -1,344 +1,820 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ICH ARMY — Number Info</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23111422%22/><text x=%2250%25%22 y=%2256%25%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22%23ffcc00%22 font-family=%22Arial%22>IA</text></svg>">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKP - Kaam Ki Party | Yuva Shakti, Rozgaar, Shiksha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #1a1a2e;
+            background: #fefefe;
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-  <style>
-    :root{
-      --bg:#0b1020;
-      --card:#0f1724;
-      --accent:#7be4ff;
-      --accent2:#ffb86b;
-      --glass: rgba(255,255,255,0.03);
-      --glass-2: rgba(255,255,255,0.02);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:
-        radial-gradient(800px 400px at 10% 10%, rgba(123,228,255,0.05), transparent 8%),
-        radial-gradient(700px 350px at 90% 90%, rgba(255,184,107,0.04), transparent 10%),
-        var(--bg);
-      color:#e6eef8;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:40px;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+        /* ===== COLORS ===== */
+        :root {
+            --saffron: #FF9933;
+            --saffron-dark: #e67300;
+            --green: #138808;
+            --green-dark: #0d6b06;
+            --white: #FFFFFF;
+            --off-white: #f8f9fa;
+            --dark: #1a1a2e;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --gold: #FFD700;
+        }
 
-    /* Page frame */
-    .scene {
-      width:min(980px, 96vw);
-      perspective:1200px;
-    }
+        /* ===== HEADER / NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 12px 0;
+            border-bottom: 3px solid var(--saffron);
+            transition: all 0.3s;
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--saffron), var(--green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: white;
+        }
+        .logo-text {
+            color: white;
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: 1px;
+        }
+        .logo-text span { color: var(--saffron); }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--saffron); }
+        .nav-cta {
+            background: var(--saffron);
+            color: var(--dark) !important;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 700 !important;
+        }
+        .nav-cta:hover { background: var(--gold) !important; color: var(--dark) !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .hamburger span { width: 28px; height: 3px; background: white; border-radius: 3px; }
 
-    /* 3D card */
-    .card {
-      width:100%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:20px;
-      padding:24px;
-      transform-style:preserve-3d;
-      transition:transform 300ms cubic-bezier(.2,.9,.3,1), box-shadow 300ms;
-      box-shadow: 0 10px 40px rgba(2,8,23,0.55), inset 0 1px 0 rgba(255,255,255,0.02);
-      display:flex;
-      gap:24px;
-      align-items:stretch;
-    }
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,153,51,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(19,136,8,0.08) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, 30px) rotate(3deg); }
+        }
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+        .hero-content { flex: 1; min-width: 300px; }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,153,51,0.2);
+            color: var(--saffron);
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255,153,51,0.3);
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+        .hero h1 .highlight-saffron { color: var(--saffron); }
+        .hero h1 .highlight-green { color: var(--green); }
+        .hero-sub {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .hero p {
+            color: rgba(255,255,255,0.65);
+            font-size: 16px;
+            max-width: 550px;
+            margin-bottom: 30px;
+        }
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn-primary {
+            background: var(--saffron);
+            color: var(--dark);
+            padding: 14px 36px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:hover { background: var(--gold); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,153,51,0.3); }
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 14px 36px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-secondary:hover { border-color: var(--saffron); color: var(--saffron); }
+        .hero-visual { flex: 1; min-width: 280px; text-align: center; }
+        .hero-logo-large {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--saffron), #FF7733, var(--green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 0 auto;
+            box-shadow: 0 30px 80px rgba(255,153,51,0.2);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .hero-logo-large .kkp-text {
+            font-size: 70px;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .hero-logo-large .kkp-sub {
+            font-size: 18px;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
 
-    .card:hover{ transform: translateY(-8px) rotateX(4deg) rotateY(-6deg); box-shadow: 0 30px 70px rgba(2,8,23,0.65); }
+        /* ===== PILLARS SECTION ===== */
+        .pillars {
+            padding: 100px 0;
+            background: var(--off-white);
+        }
+        .section-tag {
+            display: inline-block;
+            color: var(--saffron);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        .section-title span { color: var(--saffron); }
+        .section-desc {
+            color: var(--gray);
+            max-width: 650px;
+            margin-bottom: 50px;
+            font-size: 16px;
+        }
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .pillar-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: 0.4s;
+            border-bottom: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--saffron), var(--green));
+            transform: scaleX(0);
+            transition: 0.4s;
+        }
+        .pillar-card:hover::before { transform: scaleX(1); }
+        .pillar-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .pillar-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+        }
+        .pillar-icon.saffron { background: rgba(255,153,51,0.15); color: var(--saffron); }
+        .pillar-icon.green { background: rgba(19,136,8,0.15); color: var(--green); }
+        .pillar-icon.blue { background: rgba(15,52,96,0.15); color: #0f3460; }
+        .pillar-icon.gold { background: rgba(255,215,0,0.15); color: #b8860b; }
+        .pillar-icon.purple { background: rgba(128,0,128,0.15); color: purple; }
+        .pillar-icon.red { background: rgba(220,20,60,0.15); color: #dc143c; }
+        .pillar-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+        .pillar-card p { color: var(--gray); font-size: 14px; }
 
-    /* left panel (visual/logo) */
-    .left {
-      width:340px;
-      min-width:240px;
-      border-radius:16px;
-      background: linear-gradient(135deg, rgba(123,228,255,0.03), rgba(255,184,107,0.02));
-      padding:20px;
-      position:relative;
-      box-shadow: 0 8px 30px rgba(3,10,25,0.45);
-      transform: translateZ(30px);
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-      align-items:center;
-      justify-content:center;
-    }
+        /* ===== MANIFESTO ===== */
+        .manifesto {
+            padding: 100px 0;
+            background: var(--dark);
+            color: white;
+        }
+        .manifesto .section-title { color: white; }
+        .manifesto .section-desc { color: rgba(255,255,255,0.6); }
+        .manifesto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .manifesto-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            border-left: 4px solid var(--saffron);
+            transition: 0.3s;
+        }
+        .manifesto-item:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); }
+        .manifesto-item .num {
+            font-size: 12px;
+            color: var(--saffron);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .manifesto-item h4 { font-size: 18px; margin-bottom: 10px; }
+        .manifesto-item p { color: rgba(255,255,255,0.6); font-size: 14px; }
 
-    /* ICH ARMY logo (SVG inline) */
-    .logo {
-      width:160px;
-      height:160px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:50%;
-      background: linear-gradient(135deg,#001122 0%, #09314a 100%);
-      box-shadow: 0 6px 24px rgba(11,24,40,0.6), inset 0 -6px 50px rgba(255,255,255,0.02);
-      transform: rotateY(12deg) translateZ(50px);
-    }
-    .logo svg { width:92%; height:92% }
+        /* ===== LEADERSHIP ===== */
+        .leadership {
+            padding: 100px 0;
+            background: var(--off-white);
+        }
+        .leaders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+        .leader-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .leader-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .leader-img {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--saffron), var(--green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+        }
+        .leader-info { padding: 25px; }
+        .leader-info h4 { font-size: 18px; font-weight: 700; }
+        .leader-info .role { color: var(--saffron); font-size: 13px; font-weight: 600; margin: 5px 0; }
+        .leader-info p { color: var(--gray); font-size: 13px; }
 
-    .left .tag {
-      background:var(--glass);
-      padding:8px 12px;
-      border-radius:999px;
-      font-weight:600;
-      color:var(--accent);
-      letter-spacing:1px;
-      transform: translateZ(20px);
-      box-shadow: 0 2px 10px rgba(123,228,255,0.04);
-    }
+        /* ===== JOIN / CONTACT ===== */
+        .join {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+        }
+        .join .section-title { color: white; }
+        .join .section-desc { color: rgba(255,255,255,0.6); }
+        .join-wrapper {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .join-info { flex: 1; min-width: 280px; }
+        .join-info .info-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        .join-info .info-icon {
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            background: rgba(255,153,51,0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--saffron);
+        }
+        .join-form { flex: 1; min-width: 300px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: rgba(255,255,255,0.7); }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.07);
+            color: white;
+            font-size: 15px;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--saffron);
+            background: rgba(255,255,255,0.12);
+        }
+        .form-group textarea { height: 100px; resize: vertical; }
+        .form-group select option { color: var(--dark); }
+        .btn-submit {
+            background: var(--saffron);
+            color: var(--dark);
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+        .btn-submit:hover { background: var(--gold); transform: translateY(-2px); }
 
-    /* right panel (content) */
-    .right{
-      flex:1;
-      padding:8px 4px;
-      transform: translateZ(20px);
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .title-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    h1{
-      margin:0;
-      font-size:20px;
-      letter-spacing:0.6px;
-    }
-    .controls{
-      display:flex;
-      gap:8px;
-      align-items:center;
-    }
-    input[type="text"]{
-      background:var(--glass-2);
-      border:1px solid rgba(255,255,255,0.03);
-      color:inherit;
-      padding:10px 12px;
-      border-radius:10px;
-      outline:none;
-      min-width:180px;
-    }
-    button{
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      border:none;
-      color:#021028;
-      padding:10px 14px;
-      border-radius:10px;
-      cursor:pointer;
-      font-weight:700;
-      box-shadow: 0 6px 18px rgba(123,228,255,0.08);
-    }
-    button:active{ transform:translateY(1px) }
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0f0f1a;
+            padding: 50px 0 20px;
+            color: rgba(255,255,255,0.7);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-col h4 { color: white; font-size: 16px; margin-bottom: 18px; }
+        .footer-col p, .footer-col a { font-size: 14px; color: rgba(255,255,255,0.5); display: block; margin-bottom: 8px; }
+        .footer-col a:hover { color: var(--saffron); }
+        .footer-social { display: flex; gap: 12px; margin-top: 15px; }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            font-size: 18px;
+        }
+        .footer-social a:hover { background: var(--saffron); color: var(--dark); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+        .footer-bottom strong { color: var(--saffron); }
 
-    .info-grid{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap:12px;
-      margin-top:8px;
-    }
-    .info-card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:12px;
-      padding:12px;
-      min-height:74px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      justify-content:center;
-    }
-    .info-card .label{ font-size:12px; color: #9fb7c7; }
-    .info-card .val{ font-size:16px; font-weight:700; color:#e6f8ff; word-break:break-word }
-
-    .raw {
-      margin-top:12px;
-      background:rgba(0,0,0,0.25);
-      border-radius:8px;
-      padding:12px;
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
-      font-size:13px;
-      color:#cfeffb;
-      max-height:180px;
-      overflow:auto;
-    }
-
-    .hint { color:#87bcd8; font-size:13px; margin-top:6px; }
-
-    /* responsive */
-    @media (max-width:820px){
-      .card{ flex-direction:column; align-items:stretch }
-      .left{ width:100%; flex-direction:row; padding:14px; gap:12px }
-      .logo{ width:90px; height:90px }
-      .right{ padding:6px 0 }
-      .info-grid{ grid-template-columns: repeat(1, 1fr) }
-    }
-  </style>
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(26,26,46,0.98); flex-direction: column; padding: 20px; gap: 15px; }
+            .nav-links.active { display: flex; }
+            .hamburger { display: flex; }
+            .hero .container { flex-direction: column; text-align: center; }
+            .hero p { margin: 0 auto 30px; }
+            .hero-buttons { justify-content: center; }
+            .hero-logo-large { width: 200px; height: 200px; }
+            .hero-logo-large .kkp-text { font-size: 45px; }
+            .hero-logo-large .kkp-sub { font-size: 14px; }
+            .pillars { padding: 60px 0; }
+            .manifesto { padding: 60px 0; }
+            .leadership { padding: 60px 0; }
+            .join { padding: 60px 0; }
+        }
+    </style>
 </head>
 <body>
-  <div class="scene">
-    <div class="card" id="card">
-      <div class="left">
-        <div class="logo" title="ICH ARMY">
-          <!-- Inline SVG for ICH ARMY logo -->
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ICH ARMY logo">
-            <defs>
-              <linearGradient id="g1" x1="0" x2="1">
-                <stop offset="0" stop-color="#7be4ff"/>
-                <stop offset="1" stop-color="#ffb86b"/>
-              </linearGradient>
-              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="6" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
 
-            <circle cx="100" cy="100" r="92" fill="#031722" />
-            <g transform="translate(100,100)" filter="url(#glow)">
-              <text x="0" y="-6" text-anchor="middle" fill="url(#g1)" font-size="46" font-weight="800" font-family="Verdana, Arial">ICH</text>
-              <text x="0" y="44" text-anchor="middle" fill="#a7dff0" font-size="26" font-weight="700" font-family="Verdana, Arial">ARMY</text>
-            </g>
-          </svg>
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">KKP</div>
+            <div class="logo-text">KAAM KI <span>PARTY</span></div>
         </div>
-
-        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-          <div class="tag">Official</div>
-          <div style="font-size:12px;color:#9fb7c7">Number Info Fetcher</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#pillars">Humara Vision</a></li>
+            <li><a href="#manifesto">Ghoshna Patra</a></li>
+            <li><a href="#leadership">Humari Team</a></li>
+            <li><a href="#join" class="nav-cta">Judein</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
         </div>
-      </div>
-
-      <div class="right">
-        <div class="title-row">
-          <h1>ICH ARMY — Mobile Number Lookup</h1>
-          <div class="controls">
-            <input id="mobileInput" type="text" placeholder="Enter mobile (e.g. 8801700000000)" />
-            <button id="goBtn">Fetch</button>
-          </div>
-        </div>
-
-      
-
-        <div class="info-grid" id="infoGrid">
-          <!-- info cards populated by JS -->
-          <div class="info-card"><div class="label">Status</div><div class="val" id="status">—</div></div>
-          <div class="info-card"><div class="label">Operator / Network</div><div class="val" id="operator">—</div></div>
-          <div class="info-card"><div class="label">Country</div><div class="val" id="country">—</div></div>
-          <div class="info-card"><div class="label">Region / Circle</div><div class="val" id="region">—</div></div>
-        </div>
-
-        <div class="raw" id="rawOut">Raw response will appear here when you fetch.</div>
-      </div>
     </div>
-  </div>
+</nav>
 
-  <script>
-    // Config: API base provided by you
-    const API_BASE = 'https://ox.taitaninfo.workers.dev/?mobile='; // do not change unless needed
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge">🔥 2026 - Badlav Ka Waada</div>
+            <h1>
+                <span class="highlight-saffron">Kaam</span>, Shiksha,<br />
+                <span class="highlight-green">Saman Adhikar</span>
+            </h1>
+            <div class="hero-sub">Yuva Shakti • Rozgaar • Garibi Mukti</div>
+            <p>
+                KKP sirf ek party nahi hai — yeh ek aandolan hai. Har yuva ko rozgaar,
+                har bachche ko shiksha, aur har nagrik ko saman adhikar dene ka sankalp.
+                Aaiye, milkar desh ko aage leke chalein.
+            </p>
+            <div class="hero-buttons">
+                <a href="#join" class="btn-primary">🤝 Hamare Saath Judein</a>
+                <a href="#manifesto" class="btn-secondary">📜 Hamara Ghoshna Patra</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-logo-large">
+                <div class="kkp-text">KKP</div>
+                <div class="kkp-sub">KAAM KI PARTY</div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    // helper: set multiple fields safely
-    function setField(id, text){
-      document.getElementById(id).textContent = text ?? '—';
-    }
+<!-- ===== PILLARS ===== -->
+<section class="pillars" id="pillars">
+    <div class="container">
+        <div class="section-tag">✨ Hamare Stambh</div>
+        <h2 class="section-title">KKP Ke <span>5 Mukhya</span> Stambh</h2>
+        <p class="section-desc">
+            Inhi paanch stambhon par hamari poori niti aur karya-kram aadharit hai.
+        </p>
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <div class="pillar-icon saffron">👥</div>
+                <h3>Yuva Sashaktikaran</h3>
+                <p>Har yuva ko skill training, startup support aur leadership ke mauke. Yuva hi desh ka kal hai.</p>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-icon green">💼</div>
+                <h3>Rozgaar Aur Kaam</h3>
+                <p>Har ghar mein ek naukri. Naye industries, manufacturing aur digital jobs ke sath rojgar ka vaada.</p>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-icon blue">📚</div>
+                <h3>Shiksha Sabke Liye</h3>
+                <p>Mufat aur quality education har bachche tak. School se lekar higher education tak ki guarantee.</p>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-icon gold">🏠</div>
+                <h3>Garibi Unmoolan</h3>
+                <p>Direct cash transfer, ration, aur housing schemes ke sath garibi ko jad se mitana.</p>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-icon purple">⚖️</div>
+                <h3>Saman Adhikar</h3>
+                <p>Jaat, dharma, ling ya region se upar uthkar har nagrik ko saman adhikar aur insaaf.</p>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-icon red">🚀</div>
+                <h3>Sabko Aage Leke Jana</h3>
+                <p>Koi peeche na chhute. Inclusive growth, digital India, aur har gaon tak vikas.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    const mobileInput = document.getElementById('mobileInput');
-    const goBtn = document.getElementById('goBtn');
-    const rawOut = document.getElementById('rawOut');
-    const card = document.getElementById('card');
+<!-- ===== MANIFESTO ===== -->
+<section class="manifesto" id="manifesto">
+    <div class="container">
+        <div class="section-tag">📜 Hamara Sankalp</div>
+        <h2 class="section-title">Ghoshna Patra <span style="color: var(--saffron);">2026</span></h2>
+        <p class="section-desc">
+            KKP ka har ek waada aapki zindagi ko behtar banane ke liye. Yeh hain hamare 7 mukhya sankalp:
+        </p>
+        <div class="manifesto-grid">
+            <div class="manifesto-item">
+                <div class="num">SANKALP 01</div>
+                <h4>🔧 Har Yuva Ko Kaam</h4>
+                <p>5 saal mein 2 crore naukriyan. Har district mein skill development centre. Free career counseling.</p>
+            </div>
+            <div class="manifesto-item">
+                <div class="num">SANKALP 02</div>
+                <h4>📖 Mufat Shiksha</h4>
+                <p>School to college — 100% free education. Scholarship har mehanti student ke liye. Digital libraries.</p>
+            </div>
+            <div class="manifesto-item">
+                <div class="num">SANKALP 03</div>
+                <h4>🏘️ Garibi Se Azaadi</h4>
+                <p>Har gariib parivar ko pucca ghar, bijli, paani aur ration. Garibi rekha 50% neeche laana.</p>
+            </div>
+            <div class="manifesto-item">
+                <div class="num">SANKALP 04</div>
+                <h4>⚖️ Saman Adhikar</h4>
+                <p>Koi bhedbhav nahi. Equal pay, equal rights. Women safety aur reservation mein sudhar.</p>
+            </div>
+            <div class="manifesto-item">
+                <div class="num">SANKALP 05</div>
+                <h4>🌱 Yuva Neta</h4>
+                <p>Yuva ko politics mein mauke. 25 saal ke candidate bhi khade ho sakte hain. New leadership.</p>
+            </div>
+            <div class="manifesto-item">
+                <div class="num">SANKALP 06</div>
+                <h4>🏥 Muft Swasthya</h4>
+                <p>Har gaon mein clinic, har shehar mein hospital. Free treatment aur dawai sabke liye.</p>
+            </div>
+            <div class="manifesto-item">
+                <div class="num">SANKALP 07</div>
+                <h4>📡 Digital India 2.0</h4>
+                <p>Har gaon mein internet. Free WiFi. Online jobs aur digital services har nagrik tak.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    // slight 3D tilt on pointer move
-    document.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      const cx = r.left + r.width/2;
-      const cy = r.top + r.height/2;
-      const dx = (e.clientX - cx) / r.width;
-      const dy = (e.clientY - cy) / r.height;
-      const rx = dy * -8;
-      const ry = dx * 12;
-      card.style.transform = `translateY(-6px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+<!-- ===== LEADERSHIP ===== -->
+<section class="leadership" id="leadership">
+    <div class="container">
+        <div class="section-tag">🌟 Hamari Team</div>
+        <h2 class="section-title">KKP Ke <span>Pramukh</span> Netaji</h2>
+        <p class="section-desc">
+            Yuva netaon ki nayi soch, jo desh ko badalne ke liye taiyar hai.
+        </p>
+        <div class="leaders-grid">
+            <div class="leader-card">
+                <div class="leader-img">👤</div>
+                <div class="leader-info">
+                    <h4>Unchai Ki Shikhar</h4>
+                    <div class="role">Founder & National President</div>
+                    <p>Yuva udyami aur samaj sevak. IIT Delhi ke alumni. 5 saal se gaon-gaon mein kaam kar rahe hain.</p>
+                </div>
+            </div>
+            <div class="leader-card">
+                <div class="leader-img">👤</div>
+                <div class="leader-info">
+                    <h4>Roshan Kumar</h4>
+                    <div class="role">National Vice President</div>
+                    <p>Social worker aur education activist. 100+ schools mein free education campaign chala chuke hain.</p>
+                </div>
+            </div>
+            <div class="leader-card">
+                <div class="leader-img">👤</div>
+                <div class="leader-info">
+                    <h4>Priya Sharma</h4>
+                    <div class="role">Yuva Morcha Adhyaksh</div>
+                    <p>Yuvaon ki aawaaz. Campus se sadak tak — yuva shakti ko ek platform dene ka kaam kar rahi hain.</p>
+                </div>
+            </div>
+            <div class="leader-card">
+                <div class="leader-img">👤</div>
+                <div class="leader-info">
+                    <h4>Amit Verma</h4>
+                    <div class="role">Media & Communications Head</div>
+                    <p>Digital strategist aur journalist. KKP ka sandesh har ghar tak pahuchane ki zimmedari.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== JOIN ===== -->
+<section class="join" id="join">
+    <div class="container">
+        <div class="section-tag">🤝 Judein Hamare Saath</div>
+        <h2 class="section-title">KKP Mein <span style="color: var(--saffron);">Shamil</span> Hone Ke Liye</h2>
+        <p class="section-desc">
+            Aap bhi is badlav ka hissa ban sakte hain. Neeche apni jaankari dein aur hum aapse sampark karenge.
+        </p>
+        <div class="join-wrapper">
+            <div class="join-info">
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div>
+                        <h4>Humara Karyalay</h4>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 14px;">KKP Bhavan, Sector 12, Noida, Uttar Pradesh - 201301</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📞</div>
+                    <div>
+                        <h4>Humse Sampark Karein</h4>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 14px;">+91 98765 43210<br />info@kaamkiparty.in</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">⏰</div>
+                    <div>
+                        <h4>Samay</h4>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 14px;">Soma-Shukra: 9:00 AM - 6:00 PM<br />Shanivaar: 10:00 AM - 4:00 PM</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🤲</div>
+                    <div>
+                        <h4>Volunteer Banein</h4>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 14px;">Apne shahar mein KKP ka prachar karein. Hum aapko har tarah ka support denge.</p>
+                    </div>
+                </div>
+            </div>
+            <form class="join-form" onsubmit="event.preventDefault(); alert('Dhanyavaad! Aapki jaankari hum tak pahunch gayi hai. KKP team jald hi aapse sampark karegi. Jai Hind!');">
+                <div class="form-group">
+                    <label>Poorna Naam *</label>
+                    <input type="text" placeholder="Aapka naam" required />
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number *</label>
+                    <input type="tel" placeholder="10 ankon ka mobile number" required />
+                </div>
+                <div class="form-group">
+                    <label>E-mail (Yadi hai to)</label>
+                    <input type="email" placeholder="aapka@email.com" />
+                </div>
+                <div class="form-group">
+                    <label>Shahar / Gaon</label>
+                    <input type="text" placeholder="Aapka shahar ya gaon" />
+                </div>
+                <div class="form-group">
+                    <label>Aap kya karna chahenge?</label>
+                    <select>
+                        <option>— Kripya chunein —</option>
+                        <option>KKP ka sadasy ban na chahta/chahti hoon</option>
+                        <option>Volunteer ka kaam karna chahta/chahti hoon</option>
+                        <option>Donation dena chahta/chahti hoon</option>
+                        <option>Apne shahar mein KKP shakh kholna chahta/chahti hoon</option>
+                        <option>Sirf jaankari chahiye</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Aapka sandesh (vikalpik)</label>
+                    <textarea placeholder="Kuch kahna chahenge?"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">🚀 Abhi Judein</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>KKP Ke Baare Mein</h4>
+                <p>Kaam Ki Party (KKP) ek yuva-kendrit rajnitik party hai jo shiksha, rozgaar, garibi ummoolan aur saman adhikar ke liye samarpit hai. 2026 mein badlav ke liye taiyar.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="#home">Home</a>
+                <a href="#pillars">Humara Vision</a>
+                <a href="#manifesto">Ghoshna Patra</a>
+                <a href="#leadership">Team</a>
+                <a href="#join">Judein</a>
+            </div>
+            <div class="footer-col">
+                <h4>Sampark Karein</h4>
+                <a href="#">📞 +91 98765 43210</a>
+                <a href="#">📧 info@kaamkiparty.in</a>
+                <a href="#">📍 Noida, UP, India</a>
+            </div>
+            <div class="footer-col">
+                <h4>Social Media</h4>
+                <div class="footer-social">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📸</a>
+                    <a href="#" title="Twitter">🐦</a>
+                    <a href="#" title="YouTube">▶️</a>
+                    <a href="#" title="WhatsApp">💬</a>
+                </div>
+                <p style="margin-top:15px; font-size:12px;">KKP har platform par hai. Humein follow karein.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 <strong>Kaam Ki Party (KKP)</strong>. Sabhi adhikar surakshit. | Jai Hind! 🇮🇳
+        </div>
+    </div>
+</footer>
+
+<script>
+function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+}
+// Close menu on link click
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('active');
     });
-    document.addEventListener('mouseleave', ()=> card.style.transform = '');
+});
+</script>
 
-    async function fetchNumber(num){
-      if(!num) { alert('Please enter a number'); return; }
-      setField('status', 'Loading…');
-      setField('operator', '—');
-      setField('country', '—');
-      setField('region', '—');
-      rawOut.textContent = 'Fetching...';
-
-      try{
-        const url = API_BASE + encodeURIComponent(num);
-        const resp = await fetch(url, {cache:'no-store'});
-        // First try parse as JSON
-        let data;
-        const text = await resp.text();
-        try {
-          data = JSON.parse(text);
-        } catch(e) {
-          // not JSON — show text
-          rawOut.textContent = text || ('HTTP ' + resp.status);
-          setField('status', resp.ok ? 'OK (non-JSON)' : ('Error ' + resp.status));
-          return;
-        }
-
-        // pretty print raw
-        rawOut.textContent = JSON.stringify(data, null, 2);
-
-        // Try to read common fields - be permissive
-        // Many API responses vary; try multiple keys
-        const maybeStatus = data.status ?? data.success ?? data.ok ?? (resp.ok ? 'success' : 'error');
-        setField('status', String(maybeStatus));
-
-        // operator/network detection common keys
-        const operator = data.operator ?? data.network ?? data.carrier ?? data.provider ?? data.service;
-        if(operator) setField('operator', operator);
-
-        const country = data.country ?? data.iso ?? data.cc ?? (data.location && data.location.country) ?? (data.owner && data.owner.country);
-        if(country) setField('country', country);
-
-        const region = data.region ?? data.circle ?? data.location?.region ?? data.area ?? data.city;
-        if(region) setField('region', region);
-
-        // If no fields found, attempt to display some heuristics / first-level keys
-        if(!operator && !country && !region){
-          // pick first few fields and show them in operator/country/region
-          const keys = Object.keys(data);
-          if(keys.length){
-            setField('operator', keys[0] + ': ' + String(data[keys[0]]));
-            if(keys[1]) setField('country', keys[1] + ': ' + JSON.stringify(data[keys[1]]));
-            if(keys[2]) setField('region', keys[2] + ': ' + JSON.stringify(data[keys[2]]));
-          } else {
-            setField('operator', 'No data found');
-          }
-        }
-
-      } catch (err) {
-        console.error(err);
-        rawOut.textContent = 'Fetch error: ' + (err.message || err);
-        setField('status', 'Fetch error');
-      }
-    }
-
-    goBtn.addEventListener('click', () => fetchNumber(mobileInput.value.trim()));
-    mobileInput.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter') fetchNumber(mobileInput.value.trim());
-    });
-
-    // Optional: populate an example number (comment or uncomment)
-    // mobileInput.value = '88017XXXXXXX';
-    // fetchNumber(mobileInput.value);
-  </script>
 </body>
 </html>
